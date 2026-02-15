@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drink My Drink - Rate & Discover Coffee</title>
+  <link href="https://fonts.googleapis.com/css2?family=Righteous&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6F4E37;
+      --secondary: #8B6F47;
+      --accent: #D4A574;
+      --dark: #2C1810;
+      --light: #FFF8F0;
+      --cream: #F5E6D3;
+      --espresso: #3E2723;
+      --latte: #C9A882;
+      --green: #2ECC71;
+      --red: #E74C3C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #6F4E37 0%, #3E2723 100%);
+      min-height: 100vh;
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      max-width: 600px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: var(--light);
+      position: relative;
+      box-shadow: 0 0 60px rgba(0,0,0,0.3);
+    }
+
+    /* Login Screen */
+    .login-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      background: linear-gradient(135deg, #6F4E37 0%, #8B6F47 50%, #C9A882 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-screen::before {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .login-screen::after {
+      content: '';
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      bottom: -50px;
+      left: -50px;
+      animation: float 8s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-20px) scale(1.05); }
+    }
+
+    .logo {
+      font-family: 'Righteous', cursive;
+      font-size: 3.5rem;
+      color: white;
+      text-shadow: 3px 3px 0 rgba(62,39,35,0.3);
+      margin-bottom: 1rem;
+      z-index: 1;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .tagline {
+      color: white;
+      font-size: 1.1rem;
+      margin-bottom: 3rem;
+      opacity: 0.95;
+      z-index: 1;
+      animation: fadeIn 0.8s ease-out 0.2s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .instagram-btn {
+      background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      z-index: 1;
+      animation: scaleIn 0.6s ease-out 0.4s both;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .instagram-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    }
+
+    .instagram-btn:active {
+      transform: translateY(-1px);
+    }
+
+    .instagram-icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    /* Auth Forms */
+    .auth-form {
+      background: rgba(255,255,255,0.95);
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 400px;
+      z-index: 1;
+      animation: scaleIn 0.6s ease-out 0.4s both;
+      backdrop-filter: blur(10px);
+    }
+
+    .auth-title {
+      font-family: 'Righteous', cursive;
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .auth-form .form-group {
+      margin-bottom: 1.25rem;
+    }
+
+    .auth-form .form-input {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s;
+      background: white;
+    }
+
+    .auth-form .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(111,78,55,0.1);
+    }
+
+    .auth-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(111,78,55,0.3);
+      margin-top: 0.5rem;
+    }
+
+    .auth-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(111,78,55,0.4);
+    }
+
+    .auth-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-switch {
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #666;
+      font-size: 0.95rem;
+    }
+
+    .auth-switch a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .auth-switch a:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+
+    .error-message {
+      background: #fee;
+      color: #c33;
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border: 1px solid #fcc;
+    }
+
+    .success-message {
+      background: #efe;
+      color: #3c3;
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      text-align: center;
+      border: 1px solid #cfc;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--espresso) 100%);
+      padding: 1.5rem;
+      color: white;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-family: 'Righteous', cursive;
+      font-size: 1.8rem;
+      text-shadow: 2px 2px 0 rgba(62,39,35,0.3);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(255,255,255,0.2);
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+    }
+
+    .user-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid white;
+    }
+
+    .logout-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      opacity: 0.9;
+      transition: opacity 0.2s;
+    }
+
+    .logout-btn:hover {
+      opacity: 1;
+      text-decoration: underline;
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      background: white;
+      border-bottom: 2px solid #eee;
+      position: sticky;
+      top: 79px;
+      z-index: 99;
+    }
+
+    .nav-tab {
+      flex: 1;
+      padding: 1rem;
+      border: none;
+      background: none;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #666;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .nav-tab.active {
+      color: var(--primary);
+    }
+
+    .nav-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 3px 3px 0 0;
+    }
+
+    /* Content */
+    .content {
+      padding: 1.5rem;
+      min-height: calc(100vh - 79px - 53px);
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeInUp 0.4s ease-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Add Drink Button */
+    .add-drink-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(111,78,55,0.4);
+      transition: all 0.3s ease;
+      z-index: 98;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .add-drink-btn:hover {
+      transform: scale(1.1) rotate(90deg);
+      box-shadow: 0 12px 35px rgba(111,78,55,0.6);
+    }
+
+    /* Drink Card */
+    .drink-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s ease;
+      animation: slideInLeft 0.5s ease-out;
+      animation-fill-mode: both;
+    }
+
+    .drink-card:nth-child(1) { animation-delay: 0.1s; }
+    .drink-card:nth-child(2) { animation-delay: 0.2s; }
+    .drink-card:nth-child(3) { animation-delay: 0.3s; }
+    .drink-card:nth-child(4) { animation-delay: 0.4s; }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .drink-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .drink-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .drink-name {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .drink-location {
+      color: #666;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .drink-rating {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .rating-display {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .rating-count {
+      font-size: 0.8rem;
+      color: #999;
+    }
+
+    .drink-directions {
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+
+    .drink-actions {
+      display: flex;
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+
+    .rate-btn {
+      flex: 1;
+      padding: 0.75rem;
+      border: 2px solid var(--primary);
+      background: white;
+      color: var(--primary);
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .rate-btn:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .rate-btn.rated {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* Star Rating */
+    .star-rating {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .star {
+      font-size: 2rem;
+      cursor: pointer;
+      color: #ddd;
+      transition: all 0.2s;
+    }
+
+    .star.active,
+    .star:hover {
+      color: var(--latte);
+      transform: scale(1.2);
+    }
+
+    /* Form */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.875rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+    }
+
+    .form-textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(111,78,55,0.3);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(111,78,55,0.4);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal.active {
+      display: flex;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 24px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: scaleUp 0.3s ease-out;
+      position: relative;
+    }
+
+    @keyframes scaleUp {
+      from {
+        transform: scale(0.9);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #999;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+
+    .close-modal:hover {
+      background: #f5f5f5;
+      color: var(--dark);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #999;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+
+    .empty-state-text {
+      font-size: 1.1rem;
+    }
+
+    /* Hashtag Badges */
+    .hashtags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+
+    .hashtag {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(111,78,55,0.1), rgba(139,111,71,0.1));
+      color: var(--primary);
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(111,78,55,0.2);
+      transition: all 0.2s;
+    }
+
+    .hashtag:hover {
+      background: linear-gradient(135deg, rgba(111,78,55,0.15), rgba(139,111,71,0.15));
+      transform: translateY(-1px);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .add-drink-btn {
+        right: 1rem;
+        bottom: 1rem;
+      }
+
+      .logo {
+        font-size: 2.5rem;
+      }
+
+      .tagline {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+      <div class="logo">☕ Drink My Drink</div>
+      <div class="tagline">Discover, Rate & Share Your Favorite Coffee</div>
+      
+      <!-- Login Form -->
+      <div id="loginForm" class="auth-form">
+        <h3 class="auth-title">Login</h3>
+        <form onsubmit="login(event)">
+          <div class="form-group">
+            <input type="text" class="form-input" id="loginUsername" required placeholder="Username">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-input" id="loginPassword" required placeholder="Password">
+          </div>
+          <button type="submit" class="auth-btn">Login</button>
+        </form>
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="showSignup(); return false;">Sign Up</a></p>
+      </div>
+
+      <!-- Signup Form -->
+      <div id="signupForm" class="auth-form" style="display: none;">
+        <h3 class="auth-title">Create Account</h3>
+        <form onsubmit="signup(event)">
+          <div class="form-group">
+            <input type="text" class="form-input" id="signupUsername" required placeholder="Username" minlength="3">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-input" id="signupPassword" required placeholder="Password" minlength="6">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-input" id="signupPasswordConfirm" required placeholder="Confirm Password" minlength="6">
+          </div>
+          <button type="submit" class="auth-btn">Create Account</button>
+        </form>
+        <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin(); return false;">Login</a></p>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+      <!-- Header -->
+      <div class="header">
+        <div class="header-content">
+          <div class="header-title">☕ Drink My Drink</div>
+          <div class="user-info">
+            <img id="userAvatar" class="user-avatar" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%23FF6B35'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.35em' font-size='40' fill='white' font-family='sans-serif'%3EU%3C/text%3E%3C/svg%3E" alt="User">
+            <span id="username">User</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('popular')">Popular</button>
+        <button class="nav-tab" onclick="switchTab('myDrinks')">My Coffee</button>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <!-- Popular Drinks Tab -->
+        <div id="popularTab" class="tab-content active">
+          <div id="drinksList"></div>
+        </div>
+
+        <!-- My Drinks Tab -->
+        <div id="myDrinksTab" class="tab-content">
+          <div id="myDrinksList"></div>
+        </div>
+      </div>
+
+      <!-- Add Drink Button -->
+      <button class="add-drink-btn" onclick="openCreateDrinkModal()">+</button>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="ratingModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Rate Coffee</h2>
+          <button class="close-modal" onclick="closeRatingModal()">&times;</button>
+        </div>
+        <div>
+          <h3 id="ratingDrinkName" style="margin-bottom: 1rem; color: var(--dark);"></h3>
+          <div class="star-rating" id="starRating"></div>
+          <div class="form-group" style="margin-top: 1.5rem;">
+            <label class="form-label">Add Hashtags (Optional)</label>
+            <input type="text" class="form-input" id="ratingHashtags" placeholder="e.g., #smooth #bold #favorite">
+            <small style="color: #999; font-size: 0.85rem; margin-top: 0.25rem; display: block;">Separate tags with spaces</small>
+          </div>
+          <button class="submit-btn" onclick="submitRating()">Submit Rating</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Create Drink Modal -->
+    <div id="createDrinkModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Create New Coffee</h2>
+          <button class="close-modal" onclick="closeCreateDrinkModal()">&times;</button>
+        </div>
+        <form onsubmit="createDrink(event)">
+          <div class="form-group">
+            <label class="form-label">Coffee Name</label>
+            <input type="text" class="form-input" id="drinkName" required placeholder="e.g., Honey Lavender Latte">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location (Optional)</label>
+            <input type="text" class="form-input" id="drinkLocation" placeholder="e.g., Blue Bottle, Oakland">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Recipe/Directions</label>
+            <textarea class="form-textarea" id="drinkDirections" required placeholder="How to make this coffee..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hashtags (Optional)</label>
+            <input type="text" class="form-input" id="drinkHashtags" placeholder="e.g., #latte #sweet #vanilla">
+            <small style="color: #999; font-size: 0.85rem; margin-top: 0.25rem; display: block;">Separate tags with spaces</small>
+          </div>
+          <button type="submit" class="submit-btn">Create Coffee</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Edit Drink Modal -->
+    <div id="editDrinkModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Edit Coffee</h2>
+          <button class="close-modal" onclick="closeEditDrinkModal()">&times;</button>
+        </div>
+        <form onsubmit="updateDrink(event)">
+          <div class="form-group">
+            <label class="form-label">Coffee Name</label>
+            <input type="text" class="form-input" id="editDrinkName" required placeholder="e.g., Honey Lavender Latte">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Location (Optional)</label>
+            <input type="text" class="form-input" id="editDrinkLocation" placeholder="e.g., Blue Bottle, Oakland">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Recipe/Directions</label>
+            <textarea class="form-textarea" id="editDrinkDirections" required placeholder="How to make this coffee..."></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hashtags (Optional)</label>
+            <input type="text" class="form-input" id="editDrinkHashtags" placeholder="e.g., #latte #sweet #vanilla">
+            <small style="color: #999; font-size: 0.85rem; margin-top: 0.25rem; display: block;">Separate tags with spaces</small>
+          </div>
+          <button type="submit" class="submit-btn">Update Coffee</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // App State
+    let currentUser = null;
+    let currentRatingDrink = null;
+    let selectedRating = 0;
+    let currentEditIndex = null;
+
+    // Initialize users storage
+    if (!localStorage.getItem('users')) {
+      localStorage.setItem('users', JSON.stringify({}));
+    }
+
+    // Show/Hide Auth Forms
+    function showLogin() {
+      document.getElementById('loginForm').style.display = 'block';
+      document.getElementById('signupForm').style.display = 'none';
+    }
+
+    function showSignup() {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('signupForm').style.display = 'block';
+    }
+
+    // Show error message
+    function showError(formId, message) {
+      const form = document.getElementById(formId);
+      let errorDiv = form.querySelector('.error-message');
+      
+      if (!errorDiv) {
+        errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        form.querySelector('form').prepend(errorDiv);
+      }
+      
+      errorDiv.textContent = message;
+      setTimeout(() => errorDiv.remove(), 4000);
+    }
+
+    // Show success message
+    function showSuccess(formId, message) {
+      const form = document.getElementById(formId);
+      let successDiv = form.querySelector('.success-message');
+      
+      if (!successDiv) {
+        successDiv = document.createElement('div');
+        successDiv.className = 'success-message';
+        form.querySelector('form').prepend(successDiv);
+      }
+      
+      successDiv.textContent = message;
+      setTimeout(() => successDiv.remove(), 3000);
+    }
+
+    // Signup Function
+    function signup(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('signupUsername').value.trim();
+      const password = document.getElementById('signupPassword').value;
+      const confirmPassword = document.getElementById('signupPasswordConfirm').value;
+      
+      // Validation
+      if (username.length < 3) {
+        showError('signupForm', 'Username must be at least 3 characters');
+        return;
+      }
+      
+      if (password.length < 6) {
+        showError('signupForm', 'Password must be at least 6 characters');
+        return;
+      }
+      
+      if (password !== confirmPassword) {
+        showError('signupForm', 'Passwords do not match');
+        return;
+      }
+      
+      // Check if username exists
+      const users = JSON.parse(localStorage.getItem('users'));
+      if (users[username]) {
+        showError('signupForm', 'Username already exists');
+        return;
+      }
+      
+      // Create user
+      users[username] = {
+        password: password, // In production, this should be hashed!
+        createdAt: new Date().toISOString(),
+        coffees: []
+      };
+      
+      localStorage.setItem('users', JSON.stringify(users));
+      
+      showSuccess('signupForm', 'Account created! Redirecting to login...');
+      
+      // Clear form
+      document.getElementById('signupUsername').value = '';
+      document.getElementById('signupPassword').value = '';
+      document.getElementById('signupPasswordConfirm').value = '';
+      
+      // Switch to login after 1.5 seconds
+      setTimeout(() => {
+        showLogin();
+        document.getElementById('loginUsername').value = username;
+      }, 1500);
+    }
+
+    // Login Function
+    function login(event) {
+      event.preventDefault();
+      
+      const username = document.getElementById('loginUsername').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      
+      const users = JSON.parse(localStorage.getItem('users'));
+      
+      if (!users[username]) {
+        showError('loginForm', 'Username not found');
+        return;
+      }
+      
+      if (users[username].password !== password) {
+        showError('loginForm', 'Incorrect password');
+        return;
+      }
+      
+      // Login successful
+      currentUser = {
+        username: username,
+        avatar: `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236F4E37'/%3E%3Ctext x='50' y='50' text-anchor='middle' dy='.35em' font-size='40' fill='white' font-family='sans-serif'%3E${username.charAt(0).toUpperCase()}%3C/text%3E%3C/svg%3E`
+      };
+      
+      // Load user's coffees
+      userDrinks = users[username].coffees || [];
+      
+      document.getElementById('username').textContent = username;
+      document.getElementById('userAvatar').src = currentUser.avatar;
+      
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+      
+      renderDrinks();
+      renderMyDrinks();
+    }
+    const popularDrinks = [
+      {
+        id: 1,
+        name: "Flat White",
+        location: "Intelligentsia Coffee, Chicago",
+        directions: "Pull a double shot of ristretto espresso. Steam microfoam milk to 140-150°F with a velvety texture. Pour steamed milk over espresso in a 1:2 ratio, creating smooth latte art.",
+        averageRating: 4.8,
+        ratingCount: 342,
+        userRating: null,
+        hashtags: ['#espresso', '#microfoam', '#smooth', '#classic']
+      },
+      {
+        id: 2,
+        name: "Cold Brew",
+        location: "Blue Bottle Coffee, San Francisco",
+        directions: "Coarsely grind coffee beans. Steep in cold water for 12-24 hours at room temperature or refrigerated. Strain through fine mesh or coffee filter. Serve over ice, dilute with water or milk to taste.",
+        averageRating: 4.6,
+        ratingCount: 278,
+        userRating: null,
+        hashtags: ['#coldbrew', '#refreshing', '#summer', '#iced']
+      },
+      {
+        id: 3,
+        name: "Cappuccino",
+        location: "Stumptown Coffee, Portland",
+        directions: "Pull a double shot of espresso into a 6oz cup. Steam milk to create equal parts foam and liquid milk at 150-155°F. Pour steamed milk and foam over espresso in equal thirds: espresso, steamed milk, foam.",
+        averageRating: 4.5,
+        ratingCount: 421,
+        userRating: null,
+        hashtags: ['#cappuccino', '#foam', '#morning', '#italian']
+      },
+      {
+        id: 4,
+        name: "Pour Over",
+        location: "Counter Culture Coffee, Durham",
+        directions: "Place filter in dripper and rinse with hot water. Add medium-ground coffee (1:16 coffee to water ratio). Bloom with double the water weight for 30-45 seconds. Pour in slow circular motions until desired volume. Total brew time 3-4 minutes.",
+        averageRating: 4.9,
+        ratingCount: 512,
+        userRating: null,
+        hashtags: ['#pourover', '#artisan', '#handcrafted', '#specialty']
+      }
+    ];
+
+    // User's created drinks
+    let userDrinks = [];
+
+    // Parse hashtags from text input
+    function parseHashtags(text) {
+      if (!text) return [];
+      
+      // Split by spaces and filter for hashtags
+      return text.trim()
+        .split(/\s+/)
+        .map(tag => {
+          // Add # if not present
+          if (tag && !tag.startsWith('#')) {
+            return '#' + tag;
+          }
+          return tag;
+        })
+        .filter(tag => tag.length > 1); // Remove empty or just '#'
+    }
+
+    // Render hashtags HTML
+    function renderHashtags(hashtags) {
+      if (!hashtags || hashtags.length === 0) return '';
+      
+      return `
+        <div class="hashtags">
+          ${hashtags.map(tag => `<span class="hashtag">${tag}</span>`).join('')}
+        </div>
+      `;
+    }
+
+    // Instagram Login (simulated)
+    function loginWithInstagram() {
+      // In a real app, this would use Instagram OAuth
+      currentUser = {
+        id: 'user_123',
+        username: 'coffee_lover',
+        avatar: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="50" fill="%236F4E37"/%3E%3Ctext x="50" y="50" text-anchor="middle" dy=".35em" font-size="40" fill="white" font-family="sans-serif"%3EC%3C/text%3E%3C/svg%3E'
+      };
+
+      document.getElementById('username').textContent = currentUser.username;
+      document.getElementById('userAvatar').src = currentUser.avatar;
+      
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+      
+      renderDrinks();
+      renderMyDrinks();
+    }
+
+    // Logout
+    function logout() {
+      // Save user's coffees before logout
+      if (currentUser) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        users[currentUser.username].coffees = userDrinks;
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+      
+      currentUser = null;
+      userDrinks = [];
+      document.getElementById('mainApp').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+      
+      // Clear login form
+      document.getElementById('loginUsername').value = '';
+      document.getElementById('loginPassword').value = '';
+      showLogin();
+    }
+
+    // Tab switching
+    function switchTab(tab) {
+      const tabs = document.querySelectorAll('.nav-tab');
+      const contents = document.querySelectorAll('.tab-content');
+      
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+      
+      if (tab === 'popular') {
+        tabs[0].classList.add('active');
+        document.getElementById('popularTab').classList.add('active');
+      } else {
+        tabs[1].classList.add('active');
+        document.getElementById('myDrinksTab').classList.add('active');
+      }
+    }
+
+    // Render drinks
+    function renderDrinks() {
+      // Load user ratings from localStorage
+      if (currentUser) {
+        const ratings = JSON.parse(localStorage.getItem('coffeeRatings') || '{}');
+        const userRatings = ratings[currentUser.username] || {};
+        
+        popularDrinks.forEach(drink => {
+          const ratingData = userRatings[drink.id];
+          if (ratingData) {
+            // Handle both old format (just number) and new format (object with rating and hashtags)
+            if (typeof ratingData === 'number') {
+              drink.userRating = ratingData;
+              drink.userHashtags = [];
+            } else {
+              drink.userRating = ratingData.rating || null;
+              drink.userHashtags = ratingData.hashtags || [];
+            }
+          } else {
+            drink.userRating = null;
+            drink.userHashtags = [];
+          }
+        });
+      }
+      
+      const container = document.getElementById('drinksList');
+      container.innerHTML = popularDrinks.map(drink => `
+        <div class="drink-card">
+          <div class="drink-header">
+            <div>
+              <div class="drink-name">${drink.name}</div>
+              <div class="drink-location">📍 ${drink.location}</div>
+            </div>
+            <div class="drink-rating">
+              <div class="rating-display">${drink.userRating || drink.averageRating.toFixed(1)}</div>
+              <div class="rating-count">${drink.ratingCount} ratings</div>
+            </div>
+          </div>
+          <div class="drink-directions">${drink.directions}</div>
+          ${renderHashtags(drink.hashtags)}
+          ${drink.userHashtags && drink.userHashtags.length > 0 ? `
+            <div style="margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #eee;">
+              <small style="color: #999; font-size: 0.85rem; display: block; margin-bottom: 0.5rem;">Your tags:</small>
+              ${renderHashtags(drink.userHashtags)}
+            </div>
+          ` : ''}
+          <div class="drink-actions">
+            <button class="rate-btn ${drink.userRating ? 'rated' : ''}" onclick="openRatingModal(${drink.id})">
+              ${drink.userRating ? '⭐ You rated: ' + drink.userRating : '⭐ Rate this coffee'}
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Render user's drinks
+    function renderMyDrinks() {
+      const container = document.getElementById('myDrinksList');
+      
+      if (userDrinks.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <div class="empty-state-icon">☕</div>
+            <div class="empty-state-text">You haven't created any coffee yet.<br>Tap the + button to add your first brew!</div>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = userDrinks.map((drink, index) => `
+        <div class="drink-card">
+          <div class="drink-header">
+            <div>
+              <div class="drink-name">${drink.name}</div>
+              ${drink.location ? `<div class="drink-location">📍 ${drink.location}</div>` : ''}
+            </div>
+            <div class="drink-rating">
+              <div class="rating-display">${drink.averageRating?.toFixed(1) || 'New'}</div>
+              ${drink.ratingCount ? `<div class="rating-count">${drink.ratingCount} ratings</div>` : ''}
+            </div>
+          </div>
+          <div class="drink-directions">${drink.directions}</div>
+          ${renderHashtags(drink.hashtags)}
+          <div class="drink-actions">
+            <button class="rate-btn" onclick="openEditDrinkModal(${index})">
+              ✏️ Edit Coffee
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Rating Modal
+    function openRatingModal(drinkId) {
+      currentRatingDrink = popularDrinks.find(d => d.id === drinkId);
+      if (!currentRatingDrink) return;
+
+      document.getElementById('ratingDrinkName').textContent = currentRatingDrink.name;
+      selectedRating = currentRatingDrink.userRating || 0;
+      renderStars();
+      document.getElementById('ratingModal').classList.add('active');
+    }
+
+    function closeRatingModal() {
+      document.getElementById('ratingModal').classList.remove('active');
+      currentRatingDrink = null;
+      selectedRating = 0;
+      document.getElementById('ratingHashtags').value = '';
+    }
+
+    function renderStars() {
+      const container = document.getElementById('starRating');
+      container.innerHTML = '';
+      
+      for (let i = 1; i <= 5; i++) {
+        const star = document.createElement('span');
+        star.className = 'star' + (i <= selectedRating ? ' active' : '');
+        star.textContent = '★';
+        star.onclick = () => selectRating(i);
+        container.appendChild(star);
+      }
+    }
+
+    function selectRating(rating) {
+      selectedRating = rating;
+      renderStars();
+    }
+
+    function submitRating() {
+      if (selectedRating === 0) {
+        alert('Please select a rating');
+        return;
+      }
+
+      if (currentRatingDrink) {
+        currentRatingDrink.userRating = selectedRating;
+        
+        // Save ratings and hashtags to localStorage
+        const ratings = JSON.parse(localStorage.getItem('coffeeRatings') || '{}');
+        if (!ratings[currentUser.username]) {
+          ratings[currentUser.username] = {};
+        }
+        
+        const hashtags = parseHashtags(document.getElementById('ratingHashtags').value);
+        
+        ratings[currentUser.username][currentRatingDrink.id] = {
+          rating: selectedRating,
+          hashtags: hashtags
+        };
+        
+        localStorage.setItem('coffeeRatings', JSON.stringify(ratings));
+        
+        renderDrinks();
+        closeRatingModal();
+      }
+    }
+
+    // Create Drink Modal
+    function openCreateDrinkModal() {
+      document.getElementById('createDrinkModal').classList.add('active');
+    }
+
+    function closeCreateDrinkModal() {
+      document.getElementById('createDrinkModal').classList.remove('active');
+      document.getElementById('drinkName').value = '';
+      document.getElementById('drinkLocation').value = '';
+      document.getElementById('drinkDirections').value = '';
+      document.getElementById('drinkHashtags').value = '';
+    }
+
+    function createDrink(event) {
+      event.preventDefault();
+
+      const newDrink = {
+        id: Date.now(),
+        name: document.getElementById('drinkName').value,
+        location: document.getElementById('drinkLocation').value,
+        directions: document.getElementById('drinkDirections').value,
+        hashtags: parseHashtags(document.getElementById('drinkHashtags').value),
+        averageRating: null,
+        ratingCount: 0
+      };
+
+      userDrinks.unshift(newDrink);
+      
+      // Save to localStorage
+      if (currentUser) {
+        const users = JSON.parse(localStorage.getItem('users'));
+        users[currentUser.username].coffees = userDrinks;
+        localStorage.setItem('users', JSON.stringify(users));
+      }
+      
+      renderMyDrinks();
+      closeCreateDrinkModal();
+      switchTab('myDrinks');
+    }
+
+    // Edit Drink Modal
+    function openEditDrinkModal(index) {
+      currentEditIndex = index;
+      const drink = userDrinks[index];
+      
+      document.getElementById('editDrinkName').value = drink.name;
+      document.getElementById('editDrinkLocation').value = drink.location || '';
+      document.getElementById('editDrinkDirections').value = drink.directions;
+      document.getElementById('editDrinkHashtags').value = drink.hashtags ? drink.hashtags.join(' ') : '';
+      
+      document.getElementById('editDrinkModal').classList.add('active');
+    }
+
+    function closeEditDrinkModal() {
+      document.getElementById('editDrinkModal').classList.remove('active');
+      currentEditIndex = null;
+      document.getElementById('editDrinkName').value = '';
+      document.getElementById('editDrinkLocation').value = '';
+      document.getElementById('editDrinkDirections').value = '';
+      document.getElementById('editDrinkHashtags').value = '';
+    }
+
+    function updateDrink(event) {
+      event.preventDefault();
+
+      if (currentEditIndex !== null) {
+        userDrinks[currentEditIndex] = {
+          ...userDrinks[currentEditIndex],
+          name: document.getElementById('editDrinkName').value,
+          location: document.getElementById('editDrinkLocation').value,
+          directions: document.getElementById('editDrinkDirections').value,
+          hashtags: parseHashtags(document.getElementById('editDrinkHashtags').value)
+        };
+
+        // Save to localStorage
+        if (currentUser) {
+          const users = JSON.parse(localStorage.getItem('users'));
+          users[currentUser.username].coffees = userDrinks;
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        renderMyDrinks();
+        closeEditDrinkModal();
+      }
+    }
+
+    // Close modals on outside click
+    document.getElementById('ratingModal').addEventListener('click', (e) => {
+      if (e.target.id === 'ratingModal') closeRatingModal();
+    });
+
+    document.getElementById('createDrinkModal').addEventListener('click', (e) => {
+      if (e.target.id === 'createDrinkModal') closeCreateDrinkModal();
+    });
+
+    document.getElementById('editDrinkModal').addEventListener('click', (e) => {
+      if (e.target.id === 'editDrinkModal') closeEditDrinkModal();
+    });
+  </script>
+</body>
+</html>
