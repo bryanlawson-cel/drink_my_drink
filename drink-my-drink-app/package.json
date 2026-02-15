@@ -1,0 +1,17 @@
+{
+  "name": "drink-my-drink",
+  "version": "1.0.0",
+  "description": "Coffee rating app with Neon PostgreSQL",
+  "main": "netlify/functions/api.js",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build step needed'"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
+}
