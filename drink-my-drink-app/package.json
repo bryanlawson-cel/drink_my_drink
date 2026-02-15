@@ -5,7 +5,7 @@
   "main": "netlify/functions/api.js",
   "scripts": {
     "dev": "netlify dev",
-    "build": "echo 'No build step needed'"
+    "build": "echo 'Build complete - no build step needed for static site'"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.9.0",
@@ -15,3 +15,4 @@
     "netlify-cli": "^17.0.0"
   }
 }
+
